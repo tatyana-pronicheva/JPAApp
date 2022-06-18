@@ -25,7 +25,8 @@ public class ProductController {
         productRepository.save(product);
     }
     @GetMapping("/products/delete/{id}")
-    public void deleteProduct(@PathVariable int id){
+    public List<Product> deleteProduct(@PathVariable int id){
         productRepository.delete(productRepository.findById(id).get());
+        return productRepository.findAll();
     }
 }
