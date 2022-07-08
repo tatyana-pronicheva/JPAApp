@@ -1,4 +1,4 @@
-angular.module('market-front', []).controller('appController', function ($scope, $http) {
+angular.module('market-front').controller('productsTableController', function ($scope, $http, $location) {
     const contextPath = 'http://localhost:8881/app/api/v1/';
 
      $scope.loadProducts = function (){
@@ -23,11 +23,13 @@ angular.module('market-front', []).controller('appController', function ($scope,
         });
     }
 
-    $scope.changeProduct = function () {
-        $http.put(contextPath + 'products/' + $scope.new_product.id, $scope.new_product)
+    $scope.navToEditProductPage = function (productId){
+        $location.path('/edit_product/'+ productId);
+    }
+
+    $scope.addToCart = function (productId){
+        $http.post(contextPath + 'cart/' + productId)
             .then(function successCallback(response) {
-                    $scope.products = response.data;
-                    $scope.new_product = null;
                     alert("Success");
                 }, function failCallback(response) {
                     alert("Error");
