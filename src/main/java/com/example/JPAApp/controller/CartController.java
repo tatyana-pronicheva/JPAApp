@@ -1,6 +1,8 @@
-package com.example.JPAApp;
+package com.example.JPAApp.controller;
 
+import com.example.JPAApp.entity.Product;
 import com.example.JPAApp.exceptions.ResourceNotFoundException;
+import com.example.JPAApp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

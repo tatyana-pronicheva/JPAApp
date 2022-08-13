@@ -1,12 +1,14 @@
-package com.example.JPAApp;
+package com.example.JPAApp.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
-@Table(name = "products_list")
+@Getter
+@Setter
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +16,6 @@ public class Product {
     private int id;
     @Column(name = "title")
     private String title;
-    @Column(name = "cost")
-    private int cost;
+    @Column(name = "price")
+    private int price;
 }

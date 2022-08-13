@@ -1,5 +1,6 @@
-package com.example.JPAApp;
+package com.example.JPAApp.repository;
 
+import com.example.JPAApp.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     void delete(Product entity);
     @Transactional
     @Modifying
-    @Query("update Product p set p.title = :title, p.cost = :cost where p.id = :id")
-    void updateProductInfoById(Integer id, String title, Integer cost);
+    @Query("update Product p set p.title = :title, p.price = :price where p.id = :id")
+    void updateProductInfoById(Integer id, String title, Integer price);
 }
