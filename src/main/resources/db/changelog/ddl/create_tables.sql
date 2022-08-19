@@ -5,7 +5,7 @@ CREATE TABLE products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   description VARCHAR(200),
-  price INT NOT NULL,
+  price DOUBLE(10, 2) NOT NULL,
   amount INT NOT NULL,
   rating INT);
 
@@ -56,7 +56,7 @@ FOREIGN KEY (role_id) REFERENCES roles (id) );
  user_id INT NOT NULL,
  product_id INT NOT NULL,
  amount INT NOT NULL,
- price INT NOT NULL,
+ price DOUBLE(10, 2) NOT NULL,
  FOREIGN KEY (product_id) REFERENCES products (id),
  FOREIGN KEY (user_id) REFERENCES users (id));
 
