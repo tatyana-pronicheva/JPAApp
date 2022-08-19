@@ -27,9 +27,15 @@ angular.module('market-front').controller('productsTableController', function ($
         $location.path('/edit_product/'+ productId);
     }
 
-    $scope.addToCart = function (productId){
-        $http.post(contextPath + 'cart/' + productId)
-            .then(function successCallback(response) {
+    $scope.addToCart = function (productId, productTitle, productCount, productPrice){
+            $http({
+                url: contextPath + 'cart/addProduct/12',
+                method: "POST",
+                data: { "id" : productId,
+                        "title": productTitle,
+                        "count": productCount,
+                        "price": productPrice}
+            }).then(function successCallback(response) {
                     alert("Success");
                 }, function failCallback(response) {
                     alert("Error");

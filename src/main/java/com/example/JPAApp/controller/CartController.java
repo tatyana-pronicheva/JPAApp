@@ -1,43 +1,43 @@
 package com.example.JPAApp.controller;
 
-import com.example.JPAApp.entity.Product;
-import com.example.JPAApp.exceptions.ResourceNotFoundException;
-import com.example.JPAApp.repository.ProductRepository;
+import com.example.JPAApp.model.Cart;
+import com.example.JPAApp.model.CartItem;
+import com.example.JPAApp.service.CartGettingService;
+import com.example.JPAApp.service.CartUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
 public class CartController {
-    private List<Product> cart = new ArrayList<Product>();
-    private final ProductRepository productRepository;
+    private final CartGettingService cartGettingService;
+    private final CartUpdateService cartUpdateService;
 
-    @GetMapping("/cart")
-    public List<Product> getCart() {
-    return cart;
+    @GetMapping("/cart/{userId}")
+    public Cart getCart(@PathVariable int userId) {
+        return cartGettingService.getCart(userId);
     }
 
-    @PostMapping("/cart/{id}")
-    public void addProductToCart(@PathVariable int id){
-        cart.add(
-        productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product id = "+ id +" not found"))
-        );
+    @PostMapping("/cart/addProduct/{userId}")
+    public void addProductToCart(@PathVariable int userId, @RequestBody CartItem cartItem){
+        cartUpdateService.addToCart(userId,  cartItem);
     }
 
-    @DeleteMapping("/cart/{id}")
-    public List<Product> deleteProductFromCart(@PathVariable int id){
-        for (int i = 0; i < cart.size(); i++){
-            if (cart.get(i).getId()==id){
-            cart.remove(i);
-            break;
-            }
-        }
-        return cart;
+    @PostMapping("/cart/removeProduct/{userId}")
+    public Cart deleteOneProduct(@PathVariable int userId, @RequestBody CartItem cartItem){
+        int productId = cartItem.getId();
+        cartUpdateService.deleteProduct(userId, productId);
+        return getCart(userId);
     }
+
+    @DeleteMapping("/cart/{userId}")
+    public Cart deleteAllProducts(@PathVariable int userId){
+        cartUpdateService.clearCart(userId);
+       return getCart(userId);
+    }
+
 
 }
 
