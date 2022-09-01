@@ -43,5 +43,28 @@ angular.module('market-front').controller('productsTableController', function ($
             );
     }
 
+    renderItem = function (url) {
+     $("#buttonsList").append("<a class='nav-link' href='"+url+"'>Скачать сформированный xls</a>");
+     }
+
+    $scope.connect = function() {
+                     var socket = new SockJS('/app/socket');
+                     stomp = Stomp.over(socket);
+                     stomp.connect({}, function (frame) {
+                     console.log('Connected: ' + frame);
+                     stomp.subscribe('/topic/items', function (item) {
+                     renderItem(item.body);
+                     });
+                     });
+                     }
+
+    $scope.requestCsvProducts = function() {
+                      stomp.send("/app/createCsvProducts", {}, {});
+                     }
+
+
+
     $scope.loadProducts();
+    $scope.connect();
+
 });

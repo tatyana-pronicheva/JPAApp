@@ -1,11 +1,15 @@
 package com.example.JPAApp.controller;
 
+import com.example.JPAApp.service.FileService;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import com.example.JPAApp.entity.Product;
 import com.example.JPAApp.exceptions.ResourceNotFoundException;
 import com.example.JPAApp.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/api/v1")
@@ -13,6 +17,7 @@ import java.util.List;
 @RestController
 public class ProductController {
     private final ProductRepository productRepository;
+    private final FileService fileService;
 
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable int id){
@@ -48,4 +53,19 @@ public class ProductController {
         return  productRepository.findAll();
     }
 
+    @MessageMapping("/createCsvProducts")
+    @SendTo("/topic/items")
+    public String createCsvProducts() throws IOException {
+        fileService.writeProductsToFile();
+        return("/app/api/v1/downloadCsvProducts.csv");
+    }
+
+    @GetMapping(value = "/downloadCsvProducts", produces = "application/octet-stream")
+        public byte[] downloadCsvProducts(){
+            try {
+                return fileService.getFileData();
+            } catch (IOException e) {
+                return new byte[] {};
+            }
+        }
 }

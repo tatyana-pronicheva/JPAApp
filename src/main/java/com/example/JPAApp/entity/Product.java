@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Array;
 
 @Entity
 @Getter
@@ -18,4 +19,10 @@ public class Product {
     private String title;
     @Column(name = "price")
     private double price;
+
+    public String[] productToArray(){
+        return new String[]{String.valueOf(id),
+                            title,
+                            String.valueOf(price)};
+    }
 }
