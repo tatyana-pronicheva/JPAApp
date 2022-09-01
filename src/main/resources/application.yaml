@@ -21,4 +21,3 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
-
