@@ -1,15 +1,15 @@
 server:
-  port: 8881
+  port: 8187
   servlet:
-    context-path: /market-backend
+    context-path: /market-auth
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/products
+    url: jdbc:mysql://localhost:3306/market
     username: root
     password: 123
   liquibase:
-    change-log: classpath:db/changelog/changelog-master.xml
+    change-log: classpath:changelog/changelog-master.xml
   jpa:
     show-sql: true
     properties:
@@ -21,3 +21,6 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
+jwt:
+  secret: h4f8093h4f983yhrt98
+  lifetime: 36000000
