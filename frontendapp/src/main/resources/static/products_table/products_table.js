@@ -1,5 +1,5 @@
 angular.module('market-front').controller('productsTableController', function ($scope, $http, $location) {
-    const contextPath = 'http://localhost:8881/app/api/v1/';
+    const contextPath = 'http://localhost:5555/backend/api/v1/';
 
      $scope.loadProducts = function (){
          $http.get(contextPath + 'products')
@@ -48,7 +48,7 @@ angular.module('market-front').controller('productsTableController', function ($
      }
 
     $scope.connect = function() {
-                     var socket = new SockJS('/app/socket');
+                     var socket = new SockJS('/backend/socket');
                      stomp = Stomp.over(socket);
                      stomp.connect({}, function (frame) {
                      console.log('Connected: ' + frame);
@@ -59,7 +59,7 @@ angular.module('market-front').controller('productsTableController', function ($
                      }
 
     $scope.requestCsvProducts = function() {
-                      stomp.send("/app/createCsvProducts", {}, {});
+                      stomp.send("/backend/createCsvProducts", {}, {});
                      }
 
 

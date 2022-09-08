@@ -1,6 +1,6 @@
 (function () {
     angular
-        .module('market-front', ['ngRoute'])
+        .module('market-front', ['ngRoute', 'ngStorage'])
         .config(config)
         .run(run);
 
@@ -29,7 +29,44 @@
     function run($rootScope, $http) {}
     })();
 
-angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http) {
-    const contextPath = 'http://localhost:8881/app/api/v1/';
 
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage) {
+    const contextPath = 'http://localhost:5555/backend/api/v1/';
+
+    $scope.isUserLoggedIn = function () {
+        if ($localStorage.token) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+ $scope.tryToAuth = function () {
+        $http.post('http://localhost:5555/auth/authenticate', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    $localStorage.token = {username: $scope.user.username, token: response.data.token};
+
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                }
+            }, function errorCallback(response) {});
+    };
+
+        if ($localStorage.token) {
+            try {
+                let jwt = $localStorage.marchMarketUser.token;
+                let payload = JSON.parse(atob(jwt.split('.')[1]));
+                let currentTime = parseInt(new Date().getTime() / 1000);
+                if (currentTime > payload.exp) {
+                    console.log("Token is expired!!!");
+                    delete $localStorage.token;
+                    $http.defaults.headers.common.Authorization = '';
+                }
+            } catch (e) {
+            }
+     }
+    if ($localStorage.token) {
+             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.token.token;
+    }
 });
