@@ -27,12 +27,10 @@ public class AuthController {
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         System.out.println(authRequest);
         try {
-            System.out.println(1);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new AppError("CHECK_TOKEN_ERROR", "Некорректный логин или пароль"), HttpStatus.UNAUTHORIZED);
         }
-        System.out.println(2);
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));

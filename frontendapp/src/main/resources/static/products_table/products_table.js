@@ -29,7 +29,7 @@ angular.module('market-front').controller('productsTableController', function ($
 
     $scope.addToCart = function (productId, productTitle, productCount, productPrice){
             $http({
-                url: contextPath + 'cart/addProduct/12',
+                url: contextPath + 'cart/addProduct/' + $scope.userId,
                 method: "POST",
                 data: { "id" : productId,
                         "title": productTitle,

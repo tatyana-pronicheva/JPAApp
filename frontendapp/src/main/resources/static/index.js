@@ -46,7 +46,10 @@ angular.module('market-front').controller('indexController', function ($rootScop
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.token = {username: $scope.user.username, token: response.data.token};
-
+                    let payload = JSON.parse(atob(response.data.token.split('.')[1]));
+                    console.log(payload);
+                    $scope.userId = payload.id;
+                    console.log($scope.userId);
                     $scope.user.username = null;
                     $scope.user.password = null;
                 }
@@ -55,8 +58,9 @@ angular.module('market-front').controller('indexController', function ($rootScop
 
         if ($localStorage.token) {
             try {
-                let jwt = $localStorage.marchMarketUser.token;
+                let jwt = $localStorage.token.token;
                 let payload = JSON.parse(atob(jwt.split('.')[1]));
+                 $scope.userId = payload.id;
                 let currentTime = parseInt(new Date().getTime() / 1000);
                 if (currentTime > payload.exp) {
                     console.log("Token is expired!!!");
