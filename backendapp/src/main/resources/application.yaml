@@ -10,6 +10,11 @@ spring:
     password: 123
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
   jpa:
     show-sql: true
     properties:
@@ -26,3 +31,9 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+  level:
+    org:
+      springframework:
+        web=TRACE:
