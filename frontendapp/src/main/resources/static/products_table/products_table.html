@@ -1,0 +1,38 @@
+<div>
+    <h2>Каталог продуктов</h2>
+    <ul id="buttonsList">
+    <button type="button" class="btn btn-primary" ng-click="requestCsvProducts()" >Запросить список товаров в csv</button>
+    </ul>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Info</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in products">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="showInfo(p)" >Info</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p.id)" >Delete</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)" >Change product</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="addToCart(p.id, p.title, 1, p.price)" >Add to cart</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
