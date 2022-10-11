@@ -60,4 +60,25 @@ FOREIGN KEY (role_id) REFERENCES roles (id) );
  FOREIGN KEY (product_id) REFERENCES products (id),
  FOREIGN KEY (user_id) REFERENCES users (id));
 
+--changeset tpronicheva:create_orders_tables
+
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  phone VARCHAR(50) NOT NULL,
+  address VARCHAR(200),
+  price DOUBLE(10, 2) NOT NULL,
+  user_id INT NOT NULL,
+  username VARCHAR(50) NOT NULL
+  );
+
+CREATE TABLE order_item (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity INT NOT NULL,
+  product_price INT NOT NULL,
+  total_price INT NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES orders (id),
+  FOREIGN KEY (product_id) REFERENCES products (id)
+  );
 
