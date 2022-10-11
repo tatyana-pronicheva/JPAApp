@@ -20,6 +20,16 @@
                 <button type="button" class="btn btn-primary" ng-click="deleteProduct(p.id)" >Delete</button>
             </td>
         </tr>
+        <p></p>
+        <h3>Детали заказа</h3>
+        <form novalidate>
+            <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
+            <p></p>
+            <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">
+            <p></p>
+        </form>
+
+        <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn()">Оформить заказ</button>
         </tbody>
     </table>
 </div>

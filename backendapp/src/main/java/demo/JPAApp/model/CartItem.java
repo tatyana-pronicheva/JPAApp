@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -19,5 +20,7 @@ public class CartItem implements Serializable {
  public void decreaseCount(int productCount) {
   count -=productCount;
  }
-
+ public double getTotalPrice(){
+  return count*price;
+ }
 }

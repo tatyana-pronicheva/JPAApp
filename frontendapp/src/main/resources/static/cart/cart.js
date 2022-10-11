@@ -23,4 +23,16 @@ angular.module('market-front').controller('cartController', function ($scope, $h
     }
 
     $scope.loadProducts();
+
+        $scope.checkOut = function () {
+        let userId = $scope.userId;
+            $http({
+                url: 'http://localhost:5555/backend/api/v1/orders/' + userId,
+                method: 'POST',
+                data: $scope.orderDetails
+            }).then(function (response) {
+                $scope.loadCart();
+                $scope.orderDetails = null
+            });
+        };
 });
